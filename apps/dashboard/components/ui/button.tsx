@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { IonSparkles } from './icons/sparkle';
-import { motion } from 'framer-motion';
 
 import { cn } from '@/utils/index';
 
@@ -54,7 +53,6 @@ export interface ButtonProps
   href?: string;
   asChild?: boolean;
   special?: boolean;
-  hoverEffect?: boolean;
 }
 
 const Button = React.forwardRef<
@@ -68,7 +66,6 @@ const Button = React.forwardRef<
       size,
       asChild = false,
       special,
-      hoverEffect = true,
       rounded,
       href,
       ...props
@@ -78,24 +75,6 @@ const Button = React.forwardRef<
     const Comp = asChild ? Slot : href ? 'a' : 'button';
     return (
       <div className={special ? 'relative w-full' : ''}>
-        {hoverEffect ? (
-          <motion.div
-            whileHover={{ scale: 1.03 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-          >
-            <Comp
-              className={cn(
-                buttonVariants({ variant, size, className, rounded })
-              )}
-              ref={ref}
-              href={href}
-              {...(props as any)}
-            />
-            {special ? (
-              <IonSparkles className="absolute -top-2.5 right-2 size-6 text-yellow-400 " />
-            ) : null}
-          </motion.div>
-        ) : (
           <Comp
             className={cn(
               buttonVariants({ variant, size, className, rounded })
@@ -104,7 +83,9 @@ const Button = React.forwardRef<
             href={href}
             {...(props as any)}
           />
-        )}
+          {special ? (
+            <IonSparkles className="absolute -top-2.5 right-2 size-6 text-yellow-400 " />
+          ) : null}
       </div>
     );
   }

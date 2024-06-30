@@ -1,10 +1,10 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { EnvelopeClosedIcon, ReloadIcon } from '@radix-ui/react-icons';
 import { Label } from '@/ui/label';
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
+import { Input } from '@/ui/input';
+import { Button } from '@/ui/button';
 import { toast } from 'sonner';
 import { passwordReset } from '@/actions/user/password-reset';
 

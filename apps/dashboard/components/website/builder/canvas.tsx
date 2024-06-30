@@ -17,7 +17,7 @@ import { website } from '@/store/slices/website-store';
 import { device } from '@/store/slices/index';
 
 // framer motion
-import SiteBuilderCanvasHotbar from './hotbar';
+import SiteBuilderCanvasHotbar from '@/components/website/builder/hotbar';
 
 export default function SiteBuilderCanvas() {
   const dispatch = useAppDispatch();
@@ -152,7 +152,10 @@ export default function SiteBuilderCanvas() {
           </div> */}
         </div>
       </div>      
-      <SiteBuilderCanvasHotbar canvasContainer={canvasContainer} canvasContainerWrapper={canvasContainerWrapper} />
+      <SiteBuilderCanvasHotbar 
+        canvasContainer={canvasContainer} 
+        canvasContainerWrapper={canvasContainerWrapper} 
+      />
     </div>
   );
 }

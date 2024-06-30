@@ -45,3 +45,6 @@ next-env.d.ts
 .turbo
 dist/**
 .next/**
+
+# packages
+/packages/**/node_modules

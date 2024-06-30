@@ -99,7 +99,6 @@ export default function SiteBuilderPublishModal({ website }) {
             focus-visible:!ring-0 focus-within:border-none"
           rounded="sm"
           size="sm"
-          hoverEffect={false}
         >
           <ChevronDownIcon />
         </Button>

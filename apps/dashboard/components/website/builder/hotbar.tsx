@@ -138,17 +138,18 @@ export default function SiteBuilderRecenterButton({
         <div className="flex items-center gap-x-2">
           {items.map((item) => (
             item.slot ? item.slot : (
-            <button
-              key={item.id}
-              className={`rounded-md p-2
-              ${item.selected ? 'bg-black-50' : ''}
-              `}
-              aria-label={item.id}
-              onClick={() => item.onClick()}
-            >
-              <item.icon />
-            </button>
-          )))}
+              <button
+                key={item.id}
+                className={`rounded-md p-2
+                  ${item.selected ? 'bg-black-50' : ''}
+                `}
+                aria-label={item.id}
+                onClick={() => item.onClick()}
+              >
+                <item.icon />
+              </button>
+            )
+          ))}
         </div>
         {hasBeenDragged && (
           <>

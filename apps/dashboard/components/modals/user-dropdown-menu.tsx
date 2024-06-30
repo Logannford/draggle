@@ -76,10 +76,11 @@ export default function UserDropdownMenu({
     {
       name: 'Logout',
       icon: <IcRoundLogOut />,
-      onClick: () => {
-        supabase.auth
+      onClick: async() => {
+        await supabase.auth
           .signOut()
           .then(() => {
+            console.log('signed out.')
             router.push('/login');
           })
           .catch((error) => {
@@ -132,7 +133,7 @@ export default function UserDropdownMenu({
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="!bg-black-50" />
-        <DropdownMenuGroup className="flex flex-col">
+        <DropdownMenuGroup className="flex flex-col font-satoshi">
           {items.map((item, index) => (
             item.html ? (
               <div key={item.name}>{item.html}</div>

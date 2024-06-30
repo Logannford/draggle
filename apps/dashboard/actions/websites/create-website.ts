@@ -55,11 +55,11 @@ export const createWebsite = async ({
 
 	// upon website creation, we need to ceate the canvas
 	// and the first page for the website
-	await createCanvas({
-		userId,
-		website: response,
-		generateCanvas,
-	});	
+	// await createCanvas({
+	// 	userId,
+	// 	website: response,
+	// 	generateCanvas,
+	// });	
 	// revalidate the dashboard page to show the new website
 	revalidatePath('/dashboard');
 

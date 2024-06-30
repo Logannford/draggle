@@ -126,7 +126,6 @@ export default function AuthenticationCard(){
             variant='secondary'
             className='w-full'
             special={false}
-            hoverEffect={false}
           >
             Confirm
           </Button>

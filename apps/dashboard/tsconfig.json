@@ -10,7 +10,8 @@
       "@/utils/*": ["./utils/*"],
       "@/ui/*": ["./components/ui/*"],
       "@/types/*": ["./types/*"],
-      "@/actions/*": ["./actions/*"]
+      "@/actions/*": ["./actions/*"],
+      "~/packages/*": ["../../packages/*"],
     },
     "allowJs": true,
     "skipLibCheck": true,

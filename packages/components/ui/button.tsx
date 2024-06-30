@@ -1,34 +1,42 @@
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { motion } from 'framer-motion';
+import { ArrowRightIcon } from '@radix-ui/react-icons'
+import { IonSparkles } from '@/components/ui/icons/sparkle';
 
-import { cn } from '~/utils/cn';
+import { cn } from '@/utils/index';
 
 const buttonVariants = cva(
-  'relative w-full inline-flex items-center font-inter justify-center whitespace-nowrap rounded-2xl hover:rounded-xl duration-300 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'relative w-full inline-flex items-center font-inter justify-center whitespace-nowrap duration-300 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-white font-satoshi',
   {
     variants: {
       variant: {
         default:
-          'border-2 border-electric-violet-300 hover:bg-electric-violet-500 shadow-sm hover:shadow-md',
-        destructive:
-          'bg-destructive text-destructive-foreground hover:bg-destructive/90',
-        outline:
-          'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
-        secondary:
           'bg-electric-violet-500 hover:bg-electric-violet-600 text-white border-2 border-electric-violet-300',
+          destructive:
+          'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+          outline:
+          'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+          secondary:
+          'border-2 border-electric-violet-300 hover:bg-electric-violet-500 shadow-sm hover:shadow-md',
         tertiary:
-          'bg-electric-violet-500 text-white hover:bg-white hover:text-black duration-300',
+          'bg-white hover:bg-white hover:text-black duration-300 text-black rounded-xl hover:rounded-lg',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
-        none: 'hover:bg-accent hover:text-accent-foreground hover:!bg-transparent hover:!text-none'
+        link: 'underline-offset-4 hover:underline text-white',
+        none: '!rounded-none'
       },
       size: {
-        default: 'h-10 px-4',
-        sm: 'h-7 rounded-md px-3 py-1',
+        default: 'h-10',
+        sm: 'h-8 rounded-md px-3 py-1',
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 w-10'
+      },
+      padding: {
+        none: '!p-0'
+      },
+      rounded: {
+        default: 'rounded-2xl hover:rounded-xl',
+        sm: 'rounded-md'
       }
     },
     defaultVariants: {
@@ -38,33 +46,73 @@ const buttonVariants = cva(
   }
 );
 
+type ButtonElementProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
+type AnchorElementProps = React.AnchorHTMLAttributes<HTMLAnchorElement>;
+
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  extends VariantProps<typeof buttonVariants> {
+  href?: string;
   asChild?: boolean;
   special?: boolean;
+  arrow?: boolean;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, special, ...props }, ref) => {
-    const Comp = asChild ? Slot : 'button';
+const Button = React.forwardRef<
+  HTMLButtonElement & HTMLAnchorElement,
+  ButtonProps & (ButtonElementProps | AnchorElementProps)
+>(
+  (
+    {
+      className,
+      variant,
+      size,
+      asChild = false,
+      special,
+      rounded,
+      href,
+      arrow,
+      ...props
+    },
+    ref
+  ) => {
+    const Comp = asChild ? Slot : href ? 'a' : 'button';
     return (
-      <div className={special ? 'relative w-full' : 'w-full'}>
-        <motion.div
-          whileHover={{ scale: 1.03 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-        >
+      <div 
+        className={cn(
+          special && 'w-full',
+          'relative'
+        )}
+      >
           <Comp
-            className={cn(buttonVariants({ variant, size, className }))}
+            className={cn(
+              arrow && 'px-10 overflow-hidden relative group',
+              buttonVariants({ variant, size, className, rounded })
+            )}
             ref={ref}
-            {...props}
-          />
-          {special ? '' : ''}
-        </motion.div>
+            href={href}
+            {...(props as any)}
+          >
+            {props.children}
+            {arrow ? (
+              <div className="overflow-hidden absolute right-4">
+                <ArrowRightIcon 
+                  className="
+                    size-5 ml-2 -translate-x-4 oveflow-hidden opacity-0
+                    transition-transform duration-300 group-hover:translate-x-0
+                    group-hover:opacity-100
+                  " 
+                />
+              </div>
+            ) : null}
+          </Comp>
+          {special ? (
+            <IonSparkles className="absolute -top-2.5 right-2 size-6 text-yellow-400 " />
+          ) : null}
       </div>
     );
   }
 );
+
 Button.displayName = 'Button';
 
 export { Button, buttonVariants };
